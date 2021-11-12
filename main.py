@@ -64,16 +64,16 @@ elif st.session_state.page==2:
 
     if st.session_state.alea < 0.5:
         with st.form(key="test_alea_kahneman_1"):
-            st.write("La France s'attend à l'arrivée d'une maladie infectieurse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
-            st.write("Si le programme A est adopté, 200 personnes seront sauvées")
-            st.write("Si le programme B est adopté, il y a 1/3 de chances que 600 personnes soient sauvées et 2/3 de chances que personne ne soit sauvé")
+            st.write("La France s'attend à l'arrivée d'une maladie infectieuse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
+            st.write("- Si le programme A est adopté, 200 personnes seront sauvées")
+            st.write("- Si le programme B est adopté, il y a 1/3 de chances que 600 personnes soient sauvées et 2/3 de chances que personne ne soit sauvé")
             programme = st.selectbox("Quel programme vous semble préférable ?",["-", "Programme A", "Programme B"])
             submit_button_2 = st.form_submit_button(label="Page suivante")
     else:
         with st.form(key="test_alea_kahneman_1"):
             st.write(
-                "La France s'attend à l'arrivée d'une maladie infectieurse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
-            st.write("Si le programme A est adopté, 400 personnes mourront")
+                "La France s'attend à l'arrivée d'une maladie infectieuse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
+            st.write("- Si le programme A est adopté, 400 personnes mourront")
             st.write(" - Si le programme B est adopté, il y a 1/3 de chances que personne ne meure et 2/3 de chances que 600 personnes meurent")
             programme = st.selectbox("Quel programme vous semble préférable ?", ["-", "Programme A", "Programme B"])
             submit_button_2 = st.form_submit_button(label="Page suivante")
