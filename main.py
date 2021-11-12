@@ -134,4 +134,4 @@ elif st.session_state.page == 999:
     st.write("Vos résultats ont bien été pris en compte")
     st.write("Merci pour votre participation")
 
-#my_bar.empty()
+my_bar.empty()
