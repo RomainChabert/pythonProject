@@ -6,10 +6,10 @@ from datetime import date
 st.title("Etude sur le provisionnement en assurance non-vie")
 
 import time
-#my_bar = st.progress(0)
-#for percent_complete in range(100):
-#    time.sleep(0.001)
-#    my_bar.progress(percent_complete + 1)
+my_bar = st.progress(0)
+for percent_complete in range(100):
+    time.sleep(0.001)
+    my_bar.progress(percent_complete + 1)
 
 if 'user_data' not in st.session_state:
     st.session_state.user_data = []
@@ -99,6 +99,7 @@ elif st.session_state.page == 999:
 
     import gspread
 
+    # A supprimer (compromis & modifés)
     credentials = {
         "type": "service_account",
         "project_id": "acoustic-mix-331213",
