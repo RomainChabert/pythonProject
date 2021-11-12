@@ -1,10 +1,24 @@
 import streamlit as st
 import random
+from datetime import datetime
+from datetime import date
 
 st.title("Etude sur le provisionnement en assurance non-vie")
 
+import time
+#my_bar = st.progress(0)
+#for percent_complete in range(100):
+#    time.sleep(0.001)
+#    my_bar.progress(percent_complete + 1)
+
 if 'user_data' not in st.session_state:
     st.session_state.user_data = []
+    date_deb = date.today()
+    date_deb2 = date_deb.strftime("%d/%m/%Y")
+    st.session_state.user_data.append(date_deb2)
+    now = datetime.now()
+    temps_debut = now.strftime("%H:%M:%S")
+    st.session_state.user_data.append(temps_debut)
 
 if 'page' not in st.session_state:
 
@@ -13,7 +27,6 @@ if 'page' not in st.session_state:
              "Actuaires, chargés d’études actuarielles et étudiants en actuariat sont invités à y participer.")
     st.write("Les résultats sont anonymes, les informations personnelles servant uniquement à des fins de statistiques descriptives.")
     st.write("Merci d’avance pour votre participation,")
-    st.write("Attention : le chargement des pages n'est pas instantané")
     st.button("Commencer l'étude")
 
 elif st.session_state.page==1:
@@ -23,17 +36,10 @@ elif st.session_state.page==1:
 
     with st.form(key='bloc_1'):
         sexe = st.selectbox('Sexe', ["-", "Homme", "Femme", "Non précisé"])
-        #worksheet.update('A1', sexe)
         age = st.selectbox('Âge', ["-","18-25", "26-35", "35-50", "51 et plus"])
         type_entreprise = st.selectbox("Type d'entreprise",["-", "Etudiant", "Compagnie d'assurance", "Mutuelle","Bancassureur","Cabinet de conseil","Autre"])
         seniorite = st.selectbox("Séniorité en actuariat",["-","Etudiant","0-2 ans","2-5 ans","5-8 ans","8-15 ans","15 ans et plus"])
-        methode_connue = st.multiselect("De quelles méthodes de provisionnement avez déjà entendu parler ?",["Chain Ladder","London Chain","Loss ratio"])
-        test_alea = random.uniform(0, 1)
-        if test_alea < 0.5:
-            bloc_un_rand_inferieur_05 = st.text_input(label='Inférieur à 0.5')
-        else:
-            bloc_un_rand_superieur_05 = st.text_input(label='Supérieur à 0.5')
-
+        methode_connue = st.multiselect("De quelles méthodes de provisionnement avez déjà entendu parler ? (plusieurs réponses possibles)",["Chain Ladder","London Chain","Loss ratio","Mack","GLM","Bornhuetter Ferguson"])
         submit_button_1 = st.form_submit_button(label='Page suivante')
 
     if submit_button_1:
@@ -44,6 +50,11 @@ elif st.session_state.page==1:
         st.session_state.user_data.append(seniorite)
         st.session_state.user_data.extend(methode_connue)
         st.session_state.user_data.append("FIN PAGE UN")
+        st.session_state.alea = random.uniform(0, 1)
+        if st.session_state.alea < 0.5:
+            st.session_state.user_data.append("Framing positif")
+        else:
+            st.session_state.user_data.append("Framing négatif")
         st.experimental_rerun()
 
 elif st.session_state.page==2:
@@ -51,20 +62,26 @@ elif st.session_state.page==2:
     st.header("Approche du risque")
     st.write("Ce deuxième groupe de questions vise à étudier votre appréhension du risque")
 
-    st.session_state.page += 1
-
-    test_alea = random.uniform(0, 1)
-
-    if test_alea < 0.5:
-        bloc_un_rand_inferieur_05 = st.text_input(label='Inférieur à 0.5')
+    if st.session_state.alea < 0.5:
+        with st.form(key="test_alea_kahneman_1"):
+            st.write("La France s'attend à l'arrivée d'une maladie infectieurse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
+            st.write("Si le programme A est adopté, 200 personnes seront sauvées")
+            st.write("Si le programme B est adopté, il y a 1/3 de chances que 600 personnes soient sauvées et 2/3 de chances que personne ne soit sauvé")
+            programme = st.selectbox("Quel programme vous semble préférable ?",["-", "Programme A", "Programme B"])
+            submit_button_2 = st.form_submit_button(label="Page suivante")
     else:
-        bloc_un_rand_superieur_05 = st.text_input(label='Supérieur à 0.5')
+        with st.form(key="test_alea_kahneman_1"):
+            st.write(
+                "La France s'attend à l'arrivée d'une maladie infectieurse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
+            st.write("Si le programme A est adopté, 400 personnes mourront")
+            st.write(" - Si le programme B est adopté, il y a 1/3 de chances que personne ne meure et 2/3 de chances que 600 personnes meurent")
+            programme = st.selectbox("Quel programme vous semble préférable ?", ["-", "Programme A", "Programme B"])
+            submit_button_2 = st.form_submit_button(label="Page suivante")
 
-    with st.form(key='my_form_2'):
-        text_input = st.text_input(label='Enter some text')
-        test = st.radio('A', ["A", "B", "C"])
-
-        submit_button_end = st.form_submit_button(label="Page suivante")
+    if submit_button_2:
+        st.session_state.page += 1
+        st.session_state.user_data.append(programme)
+        st.experimental_rerun()
 
 elif st.session_state.page == 3:
 
@@ -73,6 +90,12 @@ elif st.session_state.page == 3:
     with st.form(key='my_form_end'):
         text_input = st.text_input(label='Vous pouvez noter ici des remarques éventuelles si vous le souhaitez')
         submit_button_end = st.form_submit_button(label="Terminer l'étude")
+
+elif st.session_state.page == 999:
+
+    end = datetime.now()
+    temps_fin = end.strftime("%H:%M:%S")
+    st.session_state.user_data.append(temps_fin)
 
     import gspread
 
@@ -92,10 +115,9 @@ elif st.session_state.page == 3:
     gc = gspread.service_account_from_dict(credentials)
     sh = gc.open("test_beta")
     worksheet = sh.sheet1
-    print(st.session_state.user_data)
     worksheet.insert_row(st.session_state.user_data, 1)
 
-elif st.session_state.page == 999:
     st.write("Vos résultats ont bien été pris en compte")
     st.write("Merci pour votre participation")
 
+#my_bar.empty()
