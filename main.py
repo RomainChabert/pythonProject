@@ -117,18 +117,18 @@ elif st.session_state.page == 999:
         "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/testteam%40acoustic-mix-331213.iam.gserviceaccount.com"
     }
 
-    #credentials_2 = {
-    #    "type": st.secrets["s_type"],
-    #    "project_id": st.secrets["s_project_id"],
-    #    "private_key_id": st.secrets["s_private_key_id"],
-    #    "private_key": st.secrets["s_private_key"],
-    #    "client_email": st.secrets["s_client_email"],
-    #    "client_id": st.secrets["s_client_id"],
-    #    "auth_uri": st.secrets["s_auth_uri"],
-    #    "token_uri": st.secrets["s_token_uri"],
-    #    "auth_provider_x509_cert_url": st.secrets["s_auth_provider_x509_cert_url"],
-    #    "client_x509_cert_url": st.secrets["s_client_x509_cert_url"]
-    #}
+    credentials_2 = {
+        "type": st.secrets["s_type"],
+        "project_id": st.secrets["s_project_id"],
+        "private_key_id": st.secrets["s_private_key_id"],
+        "private_key": st.secrets["s_private_key"],
+        "client_email": st.secrets["s_client_email"],
+        "client_id": st.secrets["s_client_id"],
+        "auth_uri": st.secrets["s_auth_uri"],
+        "token_uri": st.secrets["s_token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["s_auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["s_client_x509_cert_url"]
+    }
 
     gc = gspread.service_account_from_dict(credentials)
     sh = gc.open("test_beta")
