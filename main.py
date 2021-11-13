@@ -5,11 +5,11 @@ from datetime import date
 
 st.title("Etude sur le provisionnement en assurance non-vie")
 
-import time
-my_bar = st.progress(0)
-for percent_complete in range(100):
-    time.sleep(0.001)
-    my_bar.progress(percent_complete + 1)
+#import time
+#my_bar = st.progress(0)
+#for percent_complete in range(100):
+#    time.sleep(0.001)
+#    my_bar.progress(percent_complete + 1)
 
 if 'user_data' not in st.session_state:
     st.session_state.user_data = []
@@ -19,6 +19,8 @@ if 'user_data' not in st.session_state:
     now = datetime.now()
     temps_debut = now.strftime("%H:%M:%S")
     st.session_state.user_data.append(temps_debut)
+
+print(st.session_state.user_data)
 
 if 'page' not in st.session_state:
 
@@ -39,7 +41,7 @@ elif st.session_state.page==1:
         age = st.selectbox('Âge', ["-","18-25", "26-35", "35-50", "51 et plus"])
         type_entreprise = st.selectbox("Type d'entreprise",["-", "Etudiant", "Compagnie d'assurance", "Mutuelle","Bancassureur","Cabinet de conseil","Autre"])
         seniorite = st.selectbox("Séniorité en actuariat",["-","Etudiant","0-2 ans","2-5 ans","5-8 ans","8-15 ans","15 ans et plus"])
-        methode_connue = st.multiselect("De quelles méthodes de provisionnement avez déjà entendu parler ? (plusieurs réponses possibles)",["Chain Ladder","London Chain","Loss ratio","Mack","GLM","Bornhuetter Ferguson"])
+        methode_connue = st.multiselect("De quelles méthodes de provisionnement avez déjà entendu parler ? (plusieurs réponses possibles)",["Chain Ladder","London Chain","Loss ratio","Mack","GLM","Bornhuetter Ferguson"]) #6 méthodes
         submit_button_1 = st.form_submit_button(label='Page suivante')
 
     if submit_button_1:
@@ -48,6 +50,8 @@ elif st.session_state.page==1:
         st.session_state.user_data.append(age)
         st.session_state.user_data.append(type_entreprise)
         st.session_state.user_data.append(seniorite)
+        while len(methode_connue)<6:
+            methode_connue.append("")
         st.session_state.user_data.extend(methode_connue)
         st.session_state.user_data.append("FIN PAGE UN")
         st.session_state.alea = random.uniform(0, 1)
@@ -113,20 +117,20 @@ elif st.session_state.page == 999:
         "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/testteam%40acoustic-mix-331213.iam.gserviceaccount.com"
     }
 
-    credentials_2 = {
-        "type": st.secrets["s_type"],
-        "project_id": st.secrets["s_project_id"],
-        "private_key_id": st.secrets["s_private_key_id"],
-        "private_key": st.secrets["s_private_key"],
-        "client_email": st.secrets["s_client_email"],
-        "client_id": st.secrets["s_client_id"],
-        "auth_uri": st.secrets["s_auth_uri"],
-        "token_uri": st.secrets["s_token_uri"],
-        "auth_provider_x509_cert_url": st.secrets["s_auth_provider_x509_cert_url"],
-        "client_x509_cert_url": st.secrets["s_client_x509_cert_url"]
-    }
+    #credentials_2 = {
+    #    "type": st.secrets["s_type"],
+    #    "project_id": st.secrets["s_project_id"],
+    #    "private_key_id": st.secrets["s_private_key_id"],
+    #    "private_key": st.secrets["s_private_key"],
+    #    "client_email": st.secrets["s_client_email"],
+    #    "client_id": st.secrets["s_client_id"],
+    #    "auth_uri": st.secrets["s_auth_uri"],
+    #    "token_uri": st.secrets["s_token_uri"],
+    #    "auth_provider_x509_cert_url": st.secrets["s_auth_provider_x509_cert_url"],
+    #    "client_x509_cert_url": st.secrets["s_client_x509_cert_url"]
+    #}
 
-    gc = gspread.service_account_from_dict(credentials_2)
+    gc = gspread.service_account_from_dict(credentials)
     sh = gc.open("test_beta")
     worksheet = sh.sheet1
     worksheet.insert_row(st.session_state.user_data, 1)
@@ -134,4 +138,4 @@ elif st.session_state.page == 999:
     st.write("Vos résultats ont bien été pris en compte")
     st.write("Merci pour votre participation")
 
-my_bar.empty()
+#my_bar.empty()
