@@ -6,28 +6,28 @@ import random
 st.title("Etude sur le provisionnement en assurance non-vie")
 
 
-Year = [1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010]
-Unemployment_Rate = [9.8, 12, 8, 7.2, 6.9, 7, 6.5, 6.2, 5.5, 6.3]
+#Year = [1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010]
+#Unemployment_Rate = [9.8, 12, 8, 7.2, 6.9, 7, 6.5, 6.2, 5.5, 6.3]
 
 
-import altair as alt
-import pandas as pd
+#import altair as alt
+#import pandas as pd
 
-data = {"annee":Year,"taux":Unemployment_Rate}
-datafr = pd.DataFrame(data)
+#data = {"annee":Year,"taux":Unemployment_Rate}
+#datafr = pd.DataFrame(data)
 
 
-chart1 = alt.Chart(datafr).mark_line(size=10).encode(
-    x='annee',
-    y='taux',
-    color='Origin:N',
-    tooltip=['taux']
-).interactive()
+#chart1 = alt.Chart(datafr).mark_line(size=10).encode(
+#    x='annee',
+#    y='taux',
+#    color='Origin:N',
+#    tooltip=['taux']
+#).interactive()
 
-chart1
+#chart1
 
-donnees = [20,40,50,20,20,30,20,40,50]
-st.line_chart(donnees)
+#donnees = [20,40,50,20,20,30,20,40,50]
+#st.line_chart(donnees)
 
 #import time
 #my_bar = st.progress(0)
