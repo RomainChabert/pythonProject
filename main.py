@@ -31,7 +31,7 @@ if st.session_state.menu == 0:
         st.session_state.menu = 2
         st.experimental_rerun()
 
-if st.session_state.menu == 1:
+elif st.session_state.menu == 1:
 
     if st.session_state.page == 0:
 
@@ -566,3 +566,20 @@ if st.session_state.menu == 1:
         st.button("Retourner au menu")
 
     # my_bar.empty()
+
+elif st.session_state.menu == 2:
+    st.session_state.retour_menu_CP = False
+
+    st.write("Le cas pratique n'est pas encore disponible")
+
+    st.session_state.retour_menu_CP = st.button("Retour")
+
+    #if st.session_state.deb_questionnaire:
+    #    st.session_state.page = 1
+    #    st.session_state.alea = random.uniform(0, 1)
+    #    st.experimental_rerun()
+
+    if st.session_state.retour_menu_CP:
+        st.session_state.menu = 0
+        st.experimental_rerun()
+
