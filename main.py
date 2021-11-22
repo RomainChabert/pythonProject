@@ -12,7 +12,7 @@ if 'menu' not in st.session_state:
 
 if st.session_state.menu == 0:
 
-    st.write("Cette étude, effecutée dans le cadre d'un mémoire d'actuariat, vise à obtenir une meilleure connaissance des pratiques actuarielles en matière de provisionnement en assurance non-vie.")
+    st.write("Cette étude, effectuée dans le cadre d'un mémoire d'actuariat, vise à obtenir une meilleure connaissance des pratiques actuarielles en matière de provisionnement en assurance non-vie.")
     st.write("Professionnels et étudiants dans le domaine de l'actuariat sont invités à y répondre.")
 
     st.markdown("L'étude est constituée de deux parties indépendantes : un questionnaire _(~ 5 minutes)_ et une série de cas pratiques _(~ 20 minutes)_.")
@@ -60,24 +60,24 @@ if st.session_state.menu == 1:
 
         if st.session_state.deb_questionnaire:
             st.session_state.page = 1
-            st.session_state.alea = random.uniform(0,1)
+            st.session_state.alea = random.uniform(0, 1)
             st.experimental_rerun()
 
         if st.session_state.retour_menu:
             st.session_state.menu = 0
             st.experimental_rerun()
 
-    #Profil de l'individu
-    elif st.session_state.page == 9:
+    # Profil de l'individu
+    elif st.session_state.page == 1:
 
         st.header("Informations générales")
         st.write("Ce premier groupe de question vise à préciser votre profil")
 
         with st.form(key='bloc_1'):
             sexe = st.selectbox('Sexe', ["-", "Homme", "Femme", "Non précisé"])
-            age = st.selectbox('Âge', ["-","18-25", "26-35", "35-50", "51 et plus"])
-            type_entreprise = st.selectbox("Type d'entreprise", ["-", "Ne travaille pas", "Compagnie d'assurance", "Mutuelle", "Bancassureur"," Cabinet de conseil", "Autre"])
-            seniorite = st.selectbox("Séniorité en actuariat", ["-", "Etudiant", "0-2 ans", "2-5 ans", "5-8 ans", "8-15 ans", "15 ans et plus"])
+            age = st.selectbox('Âge', ["-", "18-25", "26-35", "35-50", "51 et plus"])
+            type_entreprise = st.selectbox("Type d'entreprise", ["-", "Ne travaille pas", "Compagnie d'assurance", "Mutuelle", "Bancassureur", " Cabinet de conseil", "Autre"])
+            seniorite = st.selectbox("Séniorité en actuariat", ["-", "Étudiant", "0-2 ans", "2-5 ans", "5-8 ans", "8-15 ans", "15 ans et plus"])
             submit_button_1 = st.form_submit_button(label='Page suivante')
 
         if submit_button_1:
@@ -104,10 +104,10 @@ if st.session_state.menu == 1:
         with st.form(key='methode_provisionnement'):
             methode_connue = st.multiselect(
                 "De quelles méthodes de provisionnement avez déjà entendu parler ? (plusieurs réponses possibles)",
-                ["Chain Ladder", "London Chain", "Loss ratio", "Mack", "GLM", "Bornhuetter Ferguson"]) # 6 méthodes
+                ["Chain Ladder", "London Chain", "Loss ratio", "Mack", "GLM", "Bornhuetter Ferguson"])  # 6 méthodes
             methode_utilisee = st.multiselect(
                 "Quelles méthodes avez-vous déjà utilisé dans un cadre professionnel ? (plusieurs réponses possibles)",
-                ["Chain Ladder", "London Chain", "Loss ratio", "Mack", "GLM", "Bornhuetter Ferguson"]) # 6 méthodes
+                ["Chain Ladder", "London Chain", "Loss ratio", "Mack", "GLM", "Bornhuetter Ferguson"])  # 6 méthodes
             sb_methode_provisionnement = st.form_submit_button(label="Page suivante")
 
         if sb_methode_provisionnement:
@@ -129,7 +129,7 @@ if st.session_state.menu == 1:
 
             st.session_state.user_data.append("BLOC")
 
-            #GROUPE QUESTION SUIVANTE
+            # GROUPE QUESTION SUIVANTE
             st.session_state.alea = random.uniform(0, 1)
             st.session_state.user_data.append(st.session_state.alea)
             if st.session_state.alea < 0.5:
@@ -191,7 +191,7 @@ if st.session_state.menu == 1:
 
         with st.form(key="marche_auto"):
             st.write("Donnez un intervalle pour le ratio S/P du secteur automobile français en 2019 avec une certitude de 90%")
-            marche_auto = st.slider("Ratio S/P du secteur automobile français",min_value=50, max_value=150, value=(90, 110))
+            marche_auto = st.slider("Ratio S/P du secteur automobile français", min_value=50, max_value=150, value=(90, 110))
             sb_SP_marche_auto = st.form_submit_button(label="Page suivante")
 
         if sb_SP_marche_auto:
@@ -200,34 +200,34 @@ if st.session_state.menu == 1:
             st.session_state.user_data.append("Ratio S/P du marché automobile en 2020")
             st.session_state.user_data.extend(marche_auto)
 
-            #GROUPE QUESTION SUIVANTE
+            # GROUPE QUESTION SUIVANTE
             st.session_state.alea = random.uniform(0, 1)
             st.session_state.user_data.append(st.session_state.alea)
             if st.session_state.alea < 0.5:
                 st.session_state.user_data.append("Ancre : 54%")
             else:
                 st.session_state.user_data.append("Ancre : 124%")
-            #GROUPE QUESTION SUIVANTE
+            # GROUPE QUESTION SUIVANTE
 
             st.experimental_rerun()
 
-    #Position par rapport à l'ancre MRH
-    elif st.session_state.page==6:
+    # Position par rapport à l'ancre MRH
+    elif st.session_state.page == 6:
 
         st.header("Marché assurantiel")
 
-        if st.session_state.alea < 0.5 :
+        if st.session_state.alea < 0.5:
             with st.form(key="marche_MRH"):
                 st.write("A votre avis, le ratio combiné comptable du secteur de l'assurance multirisque habitation en France en 2020 (avant réassurance) était-il supérieur ou inférieur à 54% ?")
-                ancre_MRH = st.selectbox(" ",["-", "Supérieur", "Inférieur"])
+                ancre_MRH = st.selectbox(" ", ["-", "Supérieur", "Inférieur"])
                 sb_position_ancre = st.form_submit_button(label="Page suivante")
 
-        else :
+        else:
 
             with st.form(key="marche_MRH"):
-               st.write("A votre avis, le ratio combiné comptable du secteur de l'assurance multirisque habitation en France en 2020 (avant réassurance) était-il supérieur ou inférieur à 124% ?")
-               ancre_MRH = st.selectbox(" ",["-", "Supérieur", "Inférieur"])
-               sb_position_ancre = st.form_submit_button(label="Page suivante")
+                st.write("A votre avis, le ratio combiné comptable du secteur de l'assurance multirisque habitation en France en 2020 (avant réassurance) était-il supérieur ou inférieur à 124% ?")
+                ancre_MRH = st.selectbox(" ", ["-", "Supérieur", "Inférieur"])
+                sb_position_ancre = st.form_submit_button(label="Page suivante")
 
         if sb_position_ancre:
 
@@ -237,7 +237,7 @@ if st.session_state.menu == 1:
 
             st.experimental_rerun()
 
-    #Ratio S/P MRH
+    # Ratio S/P MRH
     elif st.session_state.page == 7:
 
         st.header("Marché assurantiel")
@@ -245,14 +245,14 @@ if st.session_state.menu == 1:
         if st.session_state.alea < 0.5:
 
             with st.form(key="marche_MRH"):
-                st.write( "A combien estimeriez-vous ce ratio S/P ?")
+                st.write("A combien estimeriez-vous ce ratio S/P ?")
                 marche_MRH = st.slider("Ratio S/P MRH (2020)", min_value=20, max_value=160, value=54)
                 sb_ancre_MRH = st.form_submit_button(label="Page suivante")
 
-        else :
+        else:
 
             with st.form(key="marche_MRH"):
-                st.write( "A combien estimeriez-vous ce ratio S/P ?")
+                st.write("A combien estimeriez-vous ce ratio S/P ?")
                 marche_MRH = st.slider("Ratio S/P MRH (2020)", min_value=20, max_value=160, value=124)
                 sb_ancre_MRH = st.form_submit_button(label="Page suivante")
 
@@ -272,7 +272,7 @@ if st.session_state.menu == 1:
 
             st.experimental_rerun()
 
-    #Page à déterminer
+    # Page à déterminer
     elif st.session_state.page == 8:
 
         st.header("Marché assurantiel")
@@ -280,14 +280,14 @@ if st.session_state.menu == 1:
         if st.session_state.alea < 0.5:
 
             with st.form(key="marche_MRH"):
-                st.write( "A combien estimeriez-vous ce ratio S/P ?")
+                st.write("A combien estimeriez-vous ce ratio S/P ?")
                 marche_MRH = st.slider("Ratio S/P MRH (2020)", min_value=54, max_value=114, value=64)
                 submit_button_6 = st.form_submit_button(label="Page suivante")
 
-        else :
+        else:
 
             with st.form(key="marche_MRH"):
-                st.write( "A combien estimeriez-vous ce ratio S/P ?")
+                st.write("A combien estimeriez-vous ce ratio S/P ?")
                 marche_MRH = st.slider("Ratio S/P MRH (2020)", min_value=64, max_value=134, value=114)
                 submit_button_6 = st.form_submit_button(label="Page suivante")
 
@@ -298,33 +298,26 @@ if st.session_state.menu == 1:
             st.experimental_rerun()
 
     # 9 normalement
-    elif st.session_state.page == 1:
+    elif st.session_state.page == 9:
 
         import altair as alt
         import pandas as pd
 
         Year = [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
-        Moyenne_bas = [74.797696, 82.036351, 76.343512, 78.146366, 74.180035, 81.828443, 81.356627, 86.071678, 72.779008, 76.031071, 72.709526, 70.671256, 79.007412, 77.816575,
-                       69.948459, 55.438527]
+        Moyenne_bas = [74.797696, 82.036351, 76.343512, 78.146366, 74.180035, 81.828443, 81.356627, 86.071678, 72.779008, 76.031071, 72.709526, 70.671256, 79.007412, 77.816575, 69.948459, 55.438527]
+        Moyenne_haut = [74.797696, 82.036351, 76.343512, 78.146366, 74.180035, 81.828443, 81.356627, 86.071678, 72.779008, 76.031071, 72.709526, 70.671256, 79.007412, 77.816575, 83.274859, 108.242495]
 
-        data_bas = {"annee":Year,"charge":Moyenne_bas}
+        data_bas = {"annee": Year, "charge": Moyenne_bas}
         dataframe_bas = pd.DataFrame(data_bas)
 
-        #data_1_bas = {"2002": Moyenne_bas[0], "2003": Moyenne_bas[1], "2004": Moyenne_bas[2], "2005": Moyenne_bas[3], "2006": Moyenne_bas[4], "2007": Moyenne_bas[5], "2008": Moyenne_bas[6], "2009": Moyenne_bas[7]}
-        #data_2_bas = {"2010": Moyenne_bas[8], "2011": Moyenne_bas[9], "2012": Moyenne_bas[10], "2013": Moyenne_bas[11], "2014": Moyenne_bas[12], "2015": Moyenne_bas[13], "2016": Moyenne_bas[14],"2017": Moyenne_bas[15]}
-        #data_1_haut = {"2002": [75], "2003": [56], "2004": [52], "2005": 45, "2006": [52], "2007": [52], "2008": [52], "2009": [52]}
-        #data_2_haut = {"2010": [31], "2011": [75], "2012": [56], "2013": [52], "2014": [52], "2015": [52], "2016": [52],"2017": [52]}
-
-        #dataframe_1_bas = pd.DataFrame(data_1_bas, index=["Charge"])
-        #dataframe_2_bas = pd.DataFrame(data_2_bas, index=["Charge"])
-        #dataframe_1_haut = pd.DataFrame(data_1_haut)
-        #dataframe_2_haut = pd.DataFrame(data_2_haut)
+        data_haut = {"annee": Year, "charge": Moyenne_haut}
+        dataframe_haut = pd.DataFrame(data_haut)
 
         # Create a selection that chooses the nearest point & selects based on x-value
         nearest = alt.selection(type='single', nearest=True, on='mouseover',
                                 fields=['annee'], empty='none')
 
-        if st.session_state.alea < 1:
+        if st.session_state.alea <= 0.25:
 
             # The basic line
             line_bas_rouge = alt.Chart(dataframe_bas).mark_line(strokeWidth=5, color='crimson').encode(
@@ -346,11 +339,9 @@ if st.session_state.menu == 1:
             )
 
             # Draw text labels near the points, and highlight based on selection
-            text_bas_rouge = line_bas_rouge.mark_text(color='cyan', align='left', dx=-25, dy=0, size=20,
-                                                      fontWeight="bold").encode(
-                text=alt.condition(nearest, 'charge:Q', alt.value(' '),format=".1f")
+            text_bas_rouge = line_bas_rouge.mark_text(color='darkgrey', align='left', dx=-25, dy=20, size=20, fontWeight="bold").encode(
+                text=alt.condition(nearest, 'charge:Q', alt.value(' '), format=".1f")
             )
-
             # Draw a rule at the location of the selection
             rules = alt.Chart(dataframe_bas).mark_rule(color='gray').encode(
                 x='annee:T',
@@ -363,14 +354,11 @@ if st.session_state.menu == 1:
                 line_bas_rouge,
                 selectors,
                 points_bas_rouge,
-                rules,
-                text_bas_rouge
+                text_bas_rouge,
+                rules
             )
 
-            #.properties(width=600, height=300)
-
-
-            st.write("On dipose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
+            st.write("On dispose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
 
             col1, col2 = st.columns(2)
             with col1:
@@ -384,19 +372,19 @@ if st.session_state.menu == 1:
 
             with st.form(key="retour_moyenne_1"):
 
-                st.slider("Charge sinistre en 2018",0,110,55)
+                slider_retour_moyenne = st.slider("Charge sinistre en 2018", 0, 110, 55)
                 sb_retour_moyenne = st.form_submit_button(label="Page suivante")
 
-        elif 0.25 < st.session_state.alea and st.session_state.alea < 1:
+        elif 0.25 < st.session_state.alea <= 0.5:
 
             # The basic line
-            line_bas_vert = alt.Chart(datafr).mark_line(strokeWidth=5, color='mediumseagreen').encode(
+            line_bas_vert = alt.Chart(dataframe_bas).mark_line(strokeWidth=5, color='mediumseagreen').encode(
                 x=alt.X('annee:T', scale=alt.Scale(domain=[982000000000, 1509000000000])),
                 y=alt.Y('charge:Q', scale=alt.Scale(domain=[0, 90]))
             )
 
             # Transparent selectors across the chart. This is what tells us the x-value of the cursor
-            selectors = alt.Chart(datafr).mark_point().encode(
+            selectors = alt.Chart(dataframe_bas).mark_point().encode(
                 x='annee:T',
                 opacity=alt.value(0),
             ).add_selection(
@@ -409,13 +397,13 @@ if st.session_state.menu == 1:
             )
 
             # Draw text labels near the points, and highlight based on selection
-            text_bas_vert = line_bas_vert.mark_text(color='forestgreen', align='left', dx=-25, dy=35, size=20,
+            text_bas_vert = line_bas_vert.mark_text(color='darkgrey', align='left', dx=-25, dy=35, size=20,
                                                     fontWeight="bold").encode(
-                text=alt.condition(nearest, 'charge:Q', alt.value(' '),format=".1f")
+                text=alt.condition(nearest, 'charge:Q', alt.value(' '), format=".1f")
             )
 
             # Draw a rule at the location of the selection
-            rules = alt.Chart(datafr).mark_rule(color='gray').encode(
+            rules = alt.Chart(dataframe_bas).mark_rule(color='gray').encode(
                 x='annee:T',
             ).transform_filter(
                 nearest
@@ -432,17 +420,90 @@ if st.session_state.menu == 1:
                 width=600, height=300
             )
 
+            st.write(
+                "On dipose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
+
+            col1, col2 = st.columns(2)
+            with col1:
+                st.altair_chart(graphe_bas_vert, True)
+
+            with col2:
+                st.write(dataframe_bas)
+
+            st.markdown("_Contexte : Un benchmark datant d'avril 2018 indique que si la sinistralité de la LoB 'deux roues' a augmenté de 8% en 6 ans, aucune évolution notable de tendance n'est  notable en  ce qui concerne la LoB 'MALUS'_")
+            st.write("A votre avis, à combien s'élève la charge de sinistre pour l'année 2018 ? (en millions)")
+
             with st.form(key="retour_moyenne_1"):
-                st.write("On dipose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
-                st.write(dataframe_1_bas)
-                st.write(dataframe_2_bas)
-                st.altair_chart(graphe_bas_vert)
-                st.write("Contexte : Un benchmark datant d'avril 2018 indique que si la sinistralité de la LoB 'deux roues' a augmenté de 8% en 6 ans, aucune évolution notable de tendance n'est  notable en  ce qui concerne la LoB 'MALUS'")
-                st.write("A votre avis, à combien s'élève la charge de sinistre pour l'année 2018 ? (en millions)")
-                st.slider("Charge sinistre en 2018",0,110,55)
+                slider_retour_moyenne = st.slider("Charge sinistre en 2018", 0, 110, 55)
                 sb_retour_moyenne = st.form_submit_button(label="Page suivante")
 
-    #Remarques
+        elif 0.5 < st.session_state.alea <= 1:
+
+            # The basic line
+            line_haut_vert = alt.Chart(dataframe_haut).mark_line(strokeWidth=5, color='mediumseagreen').encode(
+                x=alt.X('annee:T', scale=alt.Scale(domain=[982000000000, 1509000000000])),
+                y=alt.Y('charge:Q', scale=alt.Scale(domain=[65, 115]))
+            )
+
+            # Transparent selectors across the chart. This is what tells us the x-value of the cursor
+            selectors = alt.Chart(dataframe_haut).mark_point().encode(
+                x='annee:T',
+                opacity=alt.value(0),
+            ).add_selection(
+                nearest
+            )
+
+            # Draw points on the line, and highlight based on selection
+            points_haut_vert = line_haut_vert.mark_point().encode(
+                opacity=alt.condition(nearest, alt.value(1), alt.value(0))
+            )
+
+            # Draw text labels near the points, and highlight based on selection
+            text_haut_vert = line_haut_vert.mark_text(color='darkgrey', align='left', dx=-25, dy=35, size=20, fontWeight="bold").encode(
+                text=alt.condition(nearest, 'charge:Q', alt.value(' '), format=".1f")
+            )
+
+            # Draw a rule at the location of the selection
+            rules = alt.Chart(dataframe_haut).mark_rule(color='gray').encode(
+                x='annee:T',
+            ).transform_filter(
+                nearest
+            )
+
+            # Put the five layers into a chart and bind the data
+            graphe_haut_vert = alt.layer(
+                line_haut_vert,
+                selectors,
+                points_haut_vert,
+                rules,
+                text_haut_vert
+            ).properties(
+                width=600, height=300
+            )
+
+            st.write("On dispose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
+
+            col1, col2 = st.columns(2)
+            with col1:
+                st.altair_chart(graphe_haut_vert, True)
+
+            with col2:
+                st.write(dataframe_haut)
+
+            st.markdown("_Contexte : Un benchmark datant d'avril 2018 indique que si la sinistralité de la LoB 'deux roues' a augmenté de 8% en 6 ans, aucune évolution notable de tendance n'est  notable en  ce qui concerne la LoB 'MALUS'_")
+            st.write("A votre avis, à combien s'élève la charge de sinistre pour l'année 2018 ? (en millions)")
+
+            with st.form(key="retour_moyenne_1"):
+                slider_retour_moyenne = st.slider("Charge sinistre en 2018", 0, 110, 55)
+                sb_retour_moyenne = st.form_submit_button(label="Page suivante")
+
+        if sb_retour_moyenne:
+            st.session_state.user_data.append("Valeur retour moyenne")
+            st.session_state.user_data.append(slider_retour_moyenne)
+            st.session_state.page += 1
+            st.experimental_rerun()
+
+    # Remarques
     elif st.session_state.page == 10:
 
         with st.form(key='my_form_end'):
@@ -498,7 +559,7 @@ if st.session_state.menu == 1:
             st.session_state.page = 999
             st.experimental_rerun()
 
-    #Page de fin
+    # Page de fin
     elif st.session_state.page == 999:
 
         st.write("Vos résultats ont bien été pris en compte")
@@ -507,4 +568,4 @@ if st.session_state.menu == 1:
 
         st.button("Retourner au menu")
 
-    #my_bar.empty()
+    # my_bar.empty()
