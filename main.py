@@ -37,9 +37,6 @@ if st.session_state.menu == 1:
 
         st.session_state.user_data = []
 
-        import socket
-        st.session_state.user_data.append(socket.gethostbyname(socket.gethostname()))
-
         from datetime import datetime
         from datetime import date
 
@@ -508,7 +505,7 @@ if st.session_state.menu == 1:
 
         with st.form(key='my_form_end'):
             retour_utilisateur = st.text_input(label='Vous pouvez noter ici des remarques éventuelles')
-            mail_utilisateur = st.text_input("Vous pouvez noter ici votre adresse mail si vous souhaitez participer à la partie pratique de l'étude (application de la méthode de Chain-Ladder à des cas concrets)", 'E-mail')
+            mail_utilisateur = st.text_input("Vous pouvez noter ici votre adresse mail si vous souhaitez participer à la partie pratique de l'étude (application de la méthode de Chain-Ladder à des cas concrets)", '@')
             submit_button_end = st.form_submit_button(label="Terminer l'étude")
 
         if submit_button_end:
