@@ -60,6 +60,7 @@ if st.session_state.menu == 1:
 
         if st.session_state.deb_questionnaire:
             st.session_state.page = 1
+            st.session_state.alea = random.uniform(0,1)
             st.experimental_rerun()
 
         if st.session_state.retour_menu:
@@ -67,7 +68,7 @@ if st.session_state.menu == 1:
             st.experimental_rerun()
 
     #Profil de l'individu
-    elif st.session_state.page == 1:
+    elif st.session_state.page == 9:
 
         st.header("Informations générales")
         st.write("Ce premier groupe de question vise à préciser votre profil")
@@ -296,7 +297,8 @@ if st.session_state.menu == 1:
             st.session_state.user_data.append(marche_MRH)
             st.experimental_rerun()
 
-    elif st.session_state.page == 9:
+    # 9 normalement
+    elif st.session_state.page == 1:
 
         import altair as alt
         import pandas as pd
@@ -305,22 +307,18 @@ if st.session_state.menu == 1:
         Moyenne_bas = [74.797696, 82.036351, 76.343512, 78.146366, 74.180035, 81.828443, 81.356627, 86.071678, 72.779008, 76.031071, 72.709526, 70.671256, 79.007412, 77.816575,
                        69.948459, 55.438527]
 
-        data = {"annee":Year,"charge":Moyenne_bas}
-        datafr = pd.DataFrame(data)
+        data_bas = {"annee":Year,"charge":Moyenne_bas}
+        dataframe_bas = pd.DataFrame(data_bas)
 
-        data_1_bas = {"2002": Moyenne_bas[0], "2003": Moyenne_bas[1], "2004": Moyenne_bas[2], "2005": Moyenne_bas[3], "2006": Moyenne_bas[4], "2007": Moyenne_bas[5], "2008": Moyenne_bas[6], "2009": Moyenne_bas[7]}
+        #data_1_bas = {"2002": Moyenne_bas[0], "2003": Moyenne_bas[1], "2004": Moyenne_bas[2], "2005": Moyenne_bas[3], "2006": Moyenne_bas[4], "2007": Moyenne_bas[5], "2008": Moyenne_bas[6], "2009": Moyenne_bas[7]}
         #data_2_bas = {"2010": Moyenne_bas[8], "2011": Moyenne_bas[9], "2012": Moyenne_bas[10], "2013": Moyenne_bas[11], "2014": Moyenne_bas[12], "2015": Moyenne_bas[13], "2016": Moyenne_bas[14],"2017": Moyenne_bas[15]}
         #data_1_haut = {"2002": [75], "2003": [56], "2004": [52], "2005": 45, "2006": [52], "2007": [52], "2008": [52], "2009": [52]}
         #data_2_haut = {"2010": [31], "2011": [75], "2012": [56], "2013": [52], "2014": [52], "2015": [52], "2016": [52],"2017": [52]}
 
-        dataframe_1_bas = pd.DataFrame(data_1_bas,index=["Charge"])
-        #dataframe_2_bas = pd.DataFrame(data_2_bas)
+        #dataframe_1_bas = pd.DataFrame(data_1_bas, index=["Charge"])
+        #dataframe_2_bas = pd.DataFrame(data_2_bas, index=["Charge"])
         #dataframe_1_haut = pd.DataFrame(data_1_haut)
         #dataframe_2_haut = pd.DataFrame(data_2_haut)
-        #dataframe_1_bas.index = ['Charge']
-        #dataframe_2_bas.index = ['Charge']
-        #dataframe_1_haut.index = ['Charge']
-        #dataframe_2_haut.index = ['Charge']
 
         # Create a selection that chooses the nearest point & selects based on x-value
         nearest = alt.selection(type='single', nearest=True, on='mouseover',
@@ -329,13 +327,13 @@ if st.session_state.menu == 1:
         if st.session_state.alea < 1:
 
             # The basic line
-            line_bas_rouge = alt.Chart(datafr).mark_line(strokeWidth=5, color='firebrick').encode(
+            line_bas_rouge = alt.Chart(dataframe_bas).mark_line(strokeWidth=5, color='crimson').encode(
                 x=alt.X('annee:T', scale=alt.Scale(domain=[982000000000, 1509000000000])),
                 y=alt.Y('charge:Q', scale=alt.Scale(domain=[50, 90]))
             )
 
             # Transparent selectors across the chart. This is what tells us the x-value of the cursor
-            selectors = alt.Chart(datafr).mark_point().encode(
+            selectors = alt.Chart(dataframe_bas).mark_point().encode(
                 x='annee:T',
                 opacity=alt.value(0),
             ).add_selection(
@@ -348,13 +346,13 @@ if st.session_state.menu == 1:
             )
 
             # Draw text labels near the points, and highlight based on selection
-            text_bas_rouge = line_bas_rouge.mark_text(color='darkgoldenrod', align='left', dx=-25, dy=-40, size=20,
+            text_bas_rouge = line_bas_rouge.mark_text(color='cyan', align='left', dx=-25, dy=0, size=20,
                                                       fontWeight="bold").encode(
-                text=alt.condition(nearest, 'charge:Q', alt.value(' '))
+                text=alt.condition(nearest, 'charge:Q', alt.value(' '),format=".1f")
             )
 
             # Draw a rule at the location of the selection
-            rules = alt.Chart(datafr).mark_rule(color='gray').encode(
+            rules = alt.Chart(dataframe_bas).mark_rule(color='gray').encode(
                 x='annee:T',
             ).transform_filter(
                 nearest
@@ -367,21 +365,29 @@ if st.session_state.menu == 1:
                 points_bas_rouge,
                 rules,
                 text_bas_rouge
-            ).properties(
-                width=600, height=300
             )
 
+            #.properties(width=600, height=300)
+
+
+            st.write("On dipose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
+
+            col1, col2 = st.columns(2)
+            with col1:
+                st.altair_chart(graphe_bas_rouge, True)
+
+            with col2:
+                st.write(dataframe_bas)
+
+            st.markdown("_Contexte : Un benchmark datant d'avril 2018 indique que si la sinistralité de la LoB 'deux roues' a augmenté de 8% en 6 ans, aucune évolution notable de tendance n'est  notable en  ce qui concerne la LoB 'MALUS'_")
+            st.write("A votre avis, à combien s'élève la charge de sinistre pour l'année 2018 ? (en millions)")
+
             with st.form(key="retour_moyenne_1"):
-                st.write("On dipose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
-                #st.write(dataframe_1_bas)
-                #st.write(dataframe_2_bas)
-                st.altair_chart(graphe_bas_rouge)
-                st.write("Contexte : Un benchmark datant d'avril 2018 indique que si la sinistralité de la LoB 'deux roues' a augmenté de 8% en 6 ans, aucune évolution notable de tendance n'est  notable en  ce qui concerne la LoB 'MALUS'")
-                st.write("A votre avis, à combien s'élève la charge de sinistre pour l'année 2018 ? (en millions)")
+
                 st.slider("Charge sinistre en 2018",0,110,55)
                 sb_retour_moyenne = st.form_submit_button(label="Page suivante")
 
-        elif st.session_state.alea > 10:
+        elif 0.25 < st.session_state.alea and st.session_state.alea < 1:
 
             # The basic line
             line_bas_vert = alt.Chart(datafr).mark_line(strokeWidth=5, color='mediumseagreen').encode(
@@ -405,7 +411,7 @@ if st.session_state.menu == 1:
             # Draw text labels near the points, and highlight based on selection
             text_bas_vert = line_bas_vert.mark_text(color='forestgreen', align='left', dx=-25, dy=35, size=20,
                                                     fontWeight="bold").encode(
-                text=alt.condition(nearest, 'charge:Q', alt.value(' '))
+                text=alt.condition(nearest, 'charge:Q', alt.value(' '),format=".1f")
             )
 
             # Draw a rule at the location of the selection
@@ -426,9 +432,15 @@ if st.session_state.menu == 1:
                 width=600, height=300
             )
 
-
-
-            st.altair_chart(graphe_bas_vert)
+            with st.form(key="retour_moyenne_1"):
+                st.write("On dipose des données relatives à la charge de sinistre de la LoB 'MALUS' d'une compagnie d'assurance entre 2002 et 2017 (en millions d'euros).")
+                st.write(dataframe_1_bas)
+                st.write(dataframe_2_bas)
+                st.altair_chart(graphe_bas_vert)
+                st.write("Contexte : Un benchmark datant d'avril 2018 indique que si la sinistralité de la LoB 'deux roues' a augmenté de 8% en 6 ans, aucune évolution notable de tendance n'est  notable en  ce qui concerne la LoB 'MALUS'")
+                st.write("A votre avis, à combien s'élève la charge de sinistre pour l'année 2018 ? (en millions)")
+                st.slider("Charge sinistre en 2018",0,110,55)
+                sb_retour_moyenne = st.form_submit_button(label="Page suivante")
 
     #Remarques
     elif st.session_state.page == 10:
