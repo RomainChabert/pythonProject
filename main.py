@@ -4,6 +4,35 @@ import random
 # https://pythonwife.com/streamlit-interview-questions/
 
 st.title("Etude sur le provisionnement en assurance non-vie")
+st.markdown("<a href='mailto:etude.provisionnement@gmail.com'>Rendre le cas pratique</a>", unsafe_allow_html=True)
+
+# Python program to read an excel file
+
+# import openpyxl module
+#import openpyxl
+#path = "C:\\Users\\romai\\OneDrive\\Documents\\Travail\\Survey\\Survey_project\\Structure_V16.xlsm"
+#wb_obj = openpyxl.load_workbook(path)
+
+#st.download_button(
+#    label="Download data as CSV",
+#    data=wb_obj,
+#    file_name='large_df.csv',
+#)
+
+#import yagmail
+
+#receiver = "romain.chabert771@gmail.com"
+#body = "Hello there from Yagmail"
+#filename = "document.pdf"
+
+#yag = yagmail.register("etude_provisionnement@gmail.com","etude_provisionnement_2021")
+#yag = yagmail.SMTP('etude_provisionnement@gmail.com')
+#yag.send(
+#    to=receiver,
+#    subject="Yagmail test with attachment",
+#    contents=body
+#    #attachments=filename,
+#)
 
 if 'menu' not in st.session_state:
     st.session_state.menu = 0   # 0 menu, 1 questionnaire, 2 cas pratique
@@ -155,7 +184,7 @@ elif st.session_state.menu == 1:
             with st.form(key="test_framing_kahneman"):
                 st.write("La France s'attend à l'arrivée d'une maladie infectieuse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
                 st.write("- Si le programme A est adopté, 400 personnes mourront")
-                st.write(" - Si le programme B est adopté, il y a 1/3 de chances que personne ne meure et 2/3 de chances que 600 personnes meurent")
+                st.write("- Si le programme B est adopté, il y a 1/3 de chances que personne ne meure et 2/3 de chances que 600 personnes meurent")
                 programme = st.selectbox("Quel programme vous semble préférable ?", ["-", "Programme A", "Programme B"])
                 sb_framing_kahneman = st.form_submit_button(label="Page suivante")
 
@@ -294,7 +323,7 @@ elif st.session_state.menu == 1:
             st.session_state.user_data.append(marche_MRH)
             st.experimental_rerun()
 
-    # 9 normalement
+    # Graphique retour moyenne
     elif st.session_state.page == 9:
 
         import altair as alt
@@ -561,25 +590,27 @@ elif st.session_state.menu == 1:
 
         st.write("Vos résultats ont bien été pris en compte")
         st.write("Merci pour votre participation")
-        st.write("Pour toute remarque ou commentaire complémentaire, n'hésitez pas à envoyer un mail à rchabert@deloitte.fr")
+        st.write("Pour toute remarque ou commentaire complémentaire, n'hésitez pas à contacter Romain Chabert (rchabert@deloitte.fr")
 
         st.button("Retourner au menu")
 
     # my_bar.empty()
 
 elif st.session_state.menu == 2:
+
     st.session_state.retour_menu_CP = False
 
-    st.write("Le cas pratique n'est pas encore disponible")
+    # http://metadataconsulting.blogspot.com/2019/03/OneDrive-2019-Direct-File-Download-URL-Maker.html
+
+    st.write("Cette seconde partie de l'étude est constituée d'une série de cas pratiques au sein d'un classeur Excel.")
+    st.write("Appuyez sur [ce lien] (https://onedrive.live.com/download?cid=E1CA44655646A7B5&resid=E1CA44655646A7B5%21238264&authkey=AKIZIoQJtLkFOKQ&em=2) pour récupérer le cas pratique.")
+
+    st.write("Une fois terminé, merci de retourner le cas pratique par mail à Romain Chabert (rchabert@deloitte.fr).")
+
+    st.write("Merci pour votre participation !")
 
     st.session_state.retour_menu_CP = st.button("Retour")
-
-    #if st.session_state.deb_questionnaire:
-    #    st.session_state.page = 1
-    #    st.session_state.alea = random.uniform(0, 1)
-    #    st.experimental_rerun()
 
     if st.session_state.retour_menu_CP:
         st.session_state.menu = 0
         st.experimental_rerun()
-
