@@ -4,7 +4,6 @@ import random
 # https://pythonwife.com/streamlit-interview-questions/
 
 st.title("Etude sur le provisionnement en assurance non-vie")
-st.markdown("<a href='mailto:etude.provisionnement@gmail.com'>Rendre le cas pratique</a>", unsafe_allow_html=True)
 
 # Python program to read an excel file
 
@@ -604,8 +603,9 @@ elif st.session_state.menu == 2:
 
     st.write("Cette seconde partie de l'étude est constituée d'une série de cas pratiques au sein d'un classeur Excel.")
     st.write("Appuyez sur [ce lien] (https://onedrive.live.com/download?cid=E1CA44655646A7B5&resid=E1CA44655646A7B5%21238264&authkey=AKIZIoQJtLkFOKQ&em=2) pour récupérer le cas pratique.")
+    st.write("_Attention : bien penser à enregistrer le fichier téléchargé afin de pouvoir le renvoyer ensuite_")
 
-    st.write("Une fois terminé, merci de retourner le cas pratique par mail à Romain Chabert (rchabert@deloitte.fr).")
+    st.markdown("Une fois terminé, merci de retourner le cas pratique par mail à l'adresse <a href='mailto:etude.provisionnement@gmail.com'>etude.provisionnement@gmail.com</a>.", unsafe_allow_html=True)
 
     st.write("Merci pour votre participation !")
 
