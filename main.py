@@ -5,34 +5,6 @@ import random
 
 st.title("Etude sur le provisionnement en assurance non-vie")
 
-# Python program to read an excel file
-
-# import openpyxl module
-#import openpyxl
-#path = "C:\\Users\\romai\\OneDrive\\Documents\\Travail\\Survey\\Survey_project\\Structure_V16.xlsm"
-#wb_obj = openpyxl.load_workbook(path)
-
-#st.download_button(
-#    label="Download data as CSV",
-#    data=wb_obj,
-#    file_name='large_df.csv',
-#)
-
-#import yagmail
-
-#receiver = "romain.chabert771@gmail.com"
-#body = "Hello there from Yagmail"
-#filename = "document.pdf"
-
-#yag = yagmail.register("etude_provisionnement@gmail.com","etude_provisionnement_2021")
-#yag = yagmail.SMTP('etude_provisionnement@gmail.com')
-#yag.send(
-#    to=receiver,
-#    subject="Yagmail test with attachment",
-#    contents=body
-#    #attachments=filename,
-#)
-
 if 'menu' not in st.session_state:
     st.session_state.menu = 0   # 0 menu, 1 questionnaire, 2 cas pratique
 
@@ -43,10 +15,10 @@ if st.session_state.menu == 0:
     st.write("Cette étude, effectuée dans le cadre d'un mémoire d'actuariat, vise à obtenir une meilleure connaissance des pratiques actuarielles en matière de provisionnement en assurance non-vie.")
     st.write("Professionnels et étudiants dans le domaine de l'actuariat sont invités à y répondre.")
 
-    st.markdown("L'étude est constituée de deux parties indépendantes : un questionnaire _(~ 5 minutes)_ et une série de cas pratiques _(~ 20 minutes)_.")
+    st.markdown("L'étude est constituée de deux parties indépendantes : un questionnaire en ligne _(~ 5 minutes)_ et un cas pratique sous Excel _(~ 20 minutes)_.")
 
     st.session_state.questionnaire = st.button("Questionnaire")
-    st.session_state.cas_pratique = st.button("Cas pratiques")
+    st.session_state.cas_pratique = st.button("Cas pratique")
 
     st.write("Merci par avance pour votre participation !")
 
@@ -601,8 +573,7 @@ elif st.session_state.menu == 2:
 
     # http://metadataconsulting.blogspot.com/2019/03/OneDrive-2019-Direct-File-Download-URL-Maker.html
 
-    st.write("Cette seconde partie de l'étude est constituée d'une série de cas pratiques au sein d'un classeur Excel.")
-    st.write("Appuyez sur [ce lien] (https://onedrive.live.com/download?cid=E1CA44655646A7B5&resid=E1CA44655646A7B5%21238264&authkey=AKIZIoQJtLkFOKQ&em=2) pour récupérer le cas pratique.")
+    st.write("Cette seconde partie de l'étude, à effectuer sur un ordinateur, est constituée d'une série de cas pratiques sous Excel. Appuyez sur [ce lien] (https://onedrive.live.com/download?cid=E1CA44655646A7B5&resid=E1CA44655646A7B5%21238264&authkey=AKIZIoQJtLkFOKQ&em=2) pour télécharger le fichier Excel.")
     st.write("_Attention : bien penser à enregistrer le fichier téléchargé afin de pouvoir le renvoyer ensuite_")
 
     st.markdown("Une fois terminé, merci de retourner le cas pratique par mail à l'adresse <a href='mailto:etude.provisionnement@gmail.com'>etude.provisionnement@gmail.com</a>.", unsafe_allow_html=True)
@@ -614,3 +585,4 @@ elif st.session_state.menu == 2:
     if st.session_state.retour_menu_CP:
         st.session_state.menu = 0
         st.experimental_rerun()
+
