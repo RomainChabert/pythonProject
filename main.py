@@ -3,8 +3,6 @@ import random
 import altair as alt
 import pandas as pd
 
-st.session_state.alea = random.uniform(0, 1)
-
 # https://pythonwife.com/streamlit-interview-questions/
 
 st.title("Etude sur le provisionnement en assurance non-vie")
@@ -18,13 +16,13 @@ if st.session_state.menu == 0:
 
     st.write("Cette étude, effectuée dans le cadre d'un mémoire d'actuariat, vise à obtenir une meilleure connaissance des pratiques actuarielles en matière de provisionnement en assurance non-vie.")
     st.write("Professionnels et étudiants dans le domaine de l'actuariat sont invités à y répondre.")
-
     st.markdown("L'étude est constituée de deux parties indépendantes : un questionnaire en ligne _(~ 5 minutes)_ et un cas pratique sous Excel _(~ 20 minutes)_.")
+    st.markdown("**Merci par avance pour votre participation !**")
 
     st.session_state.questionnaire = st.button("Questionnaire")
     st.session_state.cas_pratique = st.button("Cas pratique")
 
-    st.write("Merci par avance pour votre participation !")
+    st.markdown("Pour toute remarque ou commentaire, n'hésitez pas à contacter Romain Chabert à l'adresse <a href='mailto:rchabert@deloitte.fr'>rchabert@deloitte.fr</a>.", unsafe_allow_html=True)
 
     if st.session_state.questionnaire:
         st.session_state.menu = 1
@@ -52,10 +50,8 @@ elif st.session_state.menu == 1:
         temps_debut = now.strftime("%H:%M:%S")
         st.session_state.user_data.append(temps_debut)
 
-        st.write("Ce bref questionnaire vise à obtenir une meilleure connaissance des pratiques actuarielles dans le domaine du provisionnement non-vie. ")
-        st.write("Les résultats sont anonymes, les informations personnelles servant uniquement à des fins de statistiques descriptives.")
+        st.write("Les résultats du questionnaire sont anonymes, les informations personnelles servant uniquement à des fins de statistiques descriptives.")
         st.markdown("_Attention : une fois le questionnaire commencé il n'est pas possible de revenir en arrière_")
-        st.write("Merci d’avance pour votre participation,")
         st.session_state.deb_questionnaire = st.button("Commencer le questionnaire")
         st.session_state.retour_menu = st.button("Retour")
 
@@ -134,142 +130,10 @@ elif st.session_state.menu == 1:
             st.session_state.alea = random.uniform(0, 1)
             st.session_state.user_data.append(st.session_state.alea)
             if st.session_state.alea < 0.5:
-                st.session_state.user_data.append("Framing positif")
+                st.session_state.user_data.append("Courbe verte")
             else:
-                st.session_state.user_data.append("Framing négatif")
+                st.session_state.user_data.append("Courbe rouge")
             # GROUPE QUESTION SUIVANTE
-
-            st.experimental_rerun()
-
-    # Maladie Kahneman
-    elif st.session_state.page == 9:
-
-        st.header("Approche du risque")
-        st.write("Ce deuxième groupe de questions vise à étudier votre appréhension du risque")
-
-        if st.session_state.alea < 0.5:
-            with st.form(key="test_framing_kahneman"):
-                st.write("La France s'attend à l'arrivée d'une maladie infectieuse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
-                st.write("- Si le programme A est adopté, 200 personnes seront sauvées")
-                st.write("- Si le programme B est adopté, il y a 1/3 de chances que 600 personnes soient sauvées et 2/3 de chances que personne ne soit sauvé")
-                programme = st.selectbox("Quel programme vous semble préférable ?", ["-", "Programme A", "Programme B"])
-                sb_framing_kahneman = st.form_submit_button(label="Page suivante")
-
-        else:
-            with st.form(key="test_framing_kahneman"):
-                st.write("La France s'attend à l'arrivée d'une maladie infectieuse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
-                st.write("- Si le programme A est adopté, 400 personnes mourront")
-                st.write("- Si le programme B est adopté, il y a 1/3 de chances que personne ne meure et 2/3 de chances que 600 personnes meurent")
-                programme = st.selectbox("Quel programme vous semble préférable ?", ["-", "Programme A", "Programme B"])
-                sb_framing_kahneman = st.form_submit_button(label="Page suivante")
-
-        if sb_framing_kahneman:
-            st.session_state.page += 1
-            st.session_state.user_data.append(programme)
-            st.experimental_rerun()
-
-    # Gambler's fallacy
-    elif st.session_state.page == 5:
-
-        st.header("Approche du risque")
-
-        with st.form(key="gambler"):
-            st.write("On estime à 2% la probabilité d’avoir un accident non responsable pour les individus en portefeuille. Les assurés A et B ont le même profil de risque et les mêmes pratiques de conduite. ")
-            st.write("L’année dernière, l’individu A a eu 4 accidents auto non responsables. L’individu B n’a jamais eu d’accident")
-            accident = st.text_input("Qui est le plus susceptible d'avoir un nouvel accident le premier ?")
-            sb_gambler = st.form_submit_button(label="Page suivante")
-
-        if sb_gambler:
-            st.session_state.page += 1
-            st.session_state.user_data.append("Individu accident")
-            st.session_state.user_data.append(accident)
-            st.experimental_rerun()
-
-    # Intervalle de confiance S/P auto
-    elif st.session_state.page == 8:
-
-        st.header("Marché assurantiel")
-
-        with st.form(key="marche_auto"):
-            st.write("Donnez un intervalle pour le ratio S/P du secteur automobile français en 2019 avec une certitude de 90%")
-            marche_auto = st.slider("Ratio S/P du secteur automobile français", min_value=50, max_value=150, value=(90, 110))
-            sb_SP_marche_auto = st.form_submit_button(label="Page suivante")
-
-        if sb_SP_marche_auto:
-
-            st.session_state.page += 1
-            st.session_state.user_data.append("Ratio S/P du marché automobile en 2020")
-            st.session_state.user_data.extend(marche_auto)
-
-            # GROUPE QUESTION SUIVANTE
-            st.session_state.alea = random.uniform(0, 1)
-            st.session_state.user_data.append(st.session_state.alea)
-            if st.session_state.alea < 0.5:
-                st.session_state.user_data.append("Ancre : 54%")
-            else:
-                st.session_state.user_data.append("Ancre : 124%")
-            # GROUPE QUESTION SUIVANTE
-
-            st.experimental_rerun()
-
-    # Position par rapport à l'ancre MRH
-    elif st.session_state.page == 6:
-
-        st.header("Marché assurantiel")
-
-        if st.session_state.alea < 0.5:
-            with st.form(key="marche_MRH"):
-                st.write("Selon vous, le ratio combiné comptable du secteur de l'assurance multirisque habitation en France en 2020 (avant réassurance) était-il supérieur ou inférieur à 54% ?")
-                ancre_MRH = st.selectbox(" ", ["-", "Supérieur", "Inférieur"])
-                sb_position_ancre = st.form_submit_button(label="Page suivante")
-
-        else:
-
-            with st.form(key="marche_MRH"):
-                st.write("Selon vous, le ratio combiné comptable du secteur de l'assurance multirisque habitation en France en 2020 (avant réassurance) était-il supérieur ou inférieur à 124% ?")
-                ancre_MRH = st.selectbox(" ", ["-", "Supérieur", "Inférieur"])
-                sb_position_ancre = st.form_submit_button(label="Page suivante")
-
-        if sb_position_ancre:
-
-            st.session_state.page += 1
-            st.session_state.user_data.append("Position vis à vis de l'ancre")
-            st.session_state.user_data.append(ancre_MRH)
-
-            st.experimental_rerun()
-
-    # Ratio S/P MRH
-    elif st.session_state.page == 7:
-
-        st.header("Marché assurantiel")
-
-        if st.session_state.alea < 0.5:
-
-            with st.form(key="marche_MRH"):
-                st.write("A combien estimeriez-vous ce ratio S/P ?")
-                marche_MRH = st.slider("Ratio S/P MRH (2020)", min_value=20, max_value=160, value=54)
-                sb_ancre_MRH = st.form_submit_button(label="Page suivante")
-
-        else:
-
-            with st.form(key="marche_MRH"):
-                st.write("A combien estimeriez-vous ce ratio S/P ?")
-                marche_MRH = st.slider("Ratio S/P MRH (2020)", min_value=20, max_value=160, value=124)
-                sb_ancre_MRH = st.form_submit_button(label="Page suivante")
-
-        if sb_ancre_MRH:
-
-            st.session_state.page += 1
-
-            st.session_state.user_data.append("Ratio S/P MRH en 2020")
-            st.session_state.user_data.append(marche_MRH)
-
-            st.session_state.alea = random.uniform(0, 1)
-            st.session_state.user_data.append(st.session_state.alea)
-            if st.session_state.alea < 0.5:
-                st.session_state.user_data.append("Comparaison auto - terrorisme")
-            else:
-                st.session_state.user_data.append("Comparaison auto - ")
 
             st.experimental_rerun()
 
@@ -351,6 +215,16 @@ elif st.session_state.menu == 1:
             st.session_state.user_data.append(slider_prime_un_an)
             st.session_state.user_data.append("Montant de prime à cing an")
             st.session_state.user_data.append(slider_prime_cinq_ans)
+
+            # GROUPE QUESTION SUIVANTE
+            st.session_state.alea = random.uniform(0, 1)
+            st.session_state.user_data.append(st.session_state.alea)
+            if st.session_state.alea < 0.5:
+                st.session_state.user_data.append("Moyenne basse")
+            else:
+                st.session_state.user_data.append("Moyenne haute")
+            # GROUPE QUESTION SUIVANTE
+
             st.experimental_rerun()
 
     # Evolution de la charge sinistre (retour moyenne)
@@ -451,6 +325,167 @@ elif st.session_state.menu == 1:
             st.session_state.page += 1
             st.experimental_rerun()
 
+    # Gambler's fallacy
+    elif st.session_state.page == 5:
+
+        st.header("Approche du risque")
+
+        with st.form(key="gambler"):
+            st.write("On estime à 2% la probabilité d’avoir un accident non responsable pour les individus en portefeuille. Les assurés A et B ont le même profil de risque et les mêmes pratiques de conduite. ")
+            st.write("L’année dernière, l’individu A a eu 4 accidents auto non responsables. L’individu B n’a jamais eu d’accident")
+            accident = st.text_input("Qui est le plus susceptible d'avoir un nouvel accident le premier ?")
+            sb_gambler = st.form_submit_button(label="Page suivante")
+
+        if sb_gambler:
+            st.session_state.page += 1
+            st.session_state.user_data.append("Individu accident")
+            st.session_state.user_data.append(accident)
+
+            # GROUPE QUESTION SUIVANTE
+            st.session_state.alea = random.uniform(0, 1)
+            st.session_state.user_data.append(st.session_state.alea)
+            if st.session_state.alea < 0.5:
+                st.session_state.user_data.append("Ancre : 62%")
+            else:
+                st.session_state.user_data.append("Ancre : 124%")
+            # GROUPE QUESTION SUIVANTE
+
+            st.experimental_rerun()
+
+    # Position par rapport à l'ancre MRH
+    elif st.session_state.page == 6:
+
+        st.header("Marché assurantiel")
+
+        if st.session_state.alea < 0.5:
+            with st.form(key="marche_MRH"):
+                st.write("Selon vous, le ratio combiné du secteur de l'assurance multirisque habitation en France en 2020 (après réassurance) était-il supérieur ou inférieur à 62% ?")
+                ancre_MRH = st.selectbox(" ", ["-", "Supérieur", "Inférieur"])
+                sb_position_ancre = st.form_submit_button(label="Page suivante")
+
+        else:
+
+            with st.form(key="marche_MRH"):
+                st.write("Selon vous, le ratio combiné comptable du secteur de l'assurance multirisque habitation en France en 2020 (après réassurance) était-il supérieur ou inférieur à 124% ?")
+                ancre_MRH = st.selectbox(" ", ["-", "Supérieur", "Inférieur"])
+                sb_position_ancre = st.form_submit_button(label="Page suivante")
+
+        if sb_position_ancre:
+
+            st.session_state.page += 1
+            st.session_state.user_data.append("Position vis à vis de l'ancre")
+            st.session_state.user_data.append(ancre_MRH)
+
+            st.experimental_rerun()
+
+    # Ratio S/P MRH
+    elif st.session_state.page == 7:
+
+        st.header("Marché assurantiel")
+
+        if st.session_state.alea < 0.5:
+
+            with st.form(key="marche_MRH"):
+                st.write("A combien estimeriez-vous ce ratio combiné ?")
+                marche_MRH = st.slider("Ratio combiné MRH (2020)", min_value=20, max_value=160, value=62)
+                sb_ancre_MRH = st.form_submit_button(label="Page suivante")
+
+        else:
+
+            with st.form(key="marche_MRH"):
+                st.write("A combien estimeriez-vous ce ratio combiné ?")
+                marche_MRH = st.slider("Ratio combiné MRH (2020)", min_value=20, max_value=160, value=124)
+                sb_ancre_MRH = st.form_submit_button(label="Page suivante")
+
+        if sb_ancre_MRH:
+
+            st.session_state.page += 1
+
+            st.session_state.user_data.append("Ratio S/P MRH en 2020")
+            st.session_state.user_data.append(marche_MRH)
+
+            st.session_state.alea = random.uniform(0, 1)
+            st.session_state.user_data.append(st.session_state.alea)
+            if st.session_state.alea < 0.5:
+                st.session_state.user_data.append("Comparaison auto - terrorisme")
+            else:
+                st.session_state.user_data.append("Comparaison auto - ")
+
+            st.experimental_rerun()
+
+    # Intervalle de confiance S/P auto
+    elif st.session_state.page == 800:
+
+        st.header("Marché assurantiel")
+
+        with st.form(key="marche_auto"):
+            st.write("Donnez un intervalle pour le ratio S/P du secteur automobile français en 2019 avec une certitude de 90%")
+            marche_auto = st.slider("Ratio S/P du secteur automobile français", min_value=50, max_value=150, value=(90, 110))
+            sb_SP_marche_auto = st.form_submit_button(label="Page suivante")
+
+        if sb_SP_marche_auto:
+
+            st.session_state.page += 1
+            st.session_state.user_data.append("Ratio S/P du marché automobile en 2020")
+            st.session_state.user_data.extend(marche_auto)
+
+            st.experimental_rerun()
+
+    # Biais de disponibilité
+    elif st.session_state.page == 8:
+
+        st.header("Marché assurantiel")
+
+        with st.form(key="charge_sinistre"):
+            st.write("Selon vous ")
+            st.write("Quel est, selon vous, le nombre d'hôpitaux français visés par une cyberattaque en 2020 ?")
+            st.write("2 : Quel est, selon vous, le nombre  ?")
+            attaque_hopitaux = st.text_input(label="Nombre d'hôpitaux visés par une cyberattque")
+            sb_biais_cognitifs = st.form_submit_button(label="Page suivante")
+
+        if sb_biais_cognitifs:
+
+            st.session_state.page += 1
+            st.session_state.user_data.append("Attaque hopitaux")
+            st.session_state.user_data.extend(attaque_hopitaux)
+
+            # GROUPE QUESTION SUIVANTE
+            st.session_state.alea = random.uniform(0, 1)
+            st.session_state.user_data.append(st.session_state.alea)
+            if st.session_state.alea < 0.5:
+                st.session_state.user_data.append("Framing positif")
+            else:
+                st.session_state.user_data.append("Framing négatif")
+            # GROUPE QUESTION SUIVANTE
+
+            st.experimental_rerun()
+
+    # Maladie Kahneman
+    elif st.session_state.page == 9:
+
+        st.header("Approche du risque")
+
+        if st.session_state.alea < 0.5:
+            with st.form(key="test_framing_kahneman"):
+                st.write("La France s'attend à l'arrivée d'une maladie infectieuse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
+                st.write("- Si le programme A est adopté, 200 personnes seront sauvées")
+                st.write("- Si le programme B est adopté, il y a 1/3 de chances que 600 personnes soient sauvées et 2/3 de chances que personne ne soit sauvé")
+                programme = st.selectbox("Quel programme vous semble préférable ?", ["-", "Programme A", "Programme B"])
+                sb_framing_kahneman = st.form_submit_button(label="Page suivante")
+
+        else:
+            with st.form(key="test_framing_kahneman"):
+                st.write("La France s'attend à l'arrivée d'une maladie infectieuse, supposée tuer 600 personnes. Deux programmes de traitement sont disponibles pour endiguer la maladie :")
+                st.write("- Si le programme A est adopté, 400 personnes mourront")
+                st.write("- Si le programme B est adopté, il y a 1/3 de chances que personne ne meure et 2/3 de chances que 600 personnes meurent")
+                programme = st.selectbox("Quel programme vous semble préférable ?", ["-", "Programme A", "Programme B"])
+                sb_framing_kahneman = st.form_submit_button(label="Page suivante")
+
+        if sb_framing_kahneman:
+            st.session_state.page += 1
+            st.session_state.user_data.append(programme)
+            st.experimental_rerun()
+
     # Remarques
     elif st.session_state.page == 10:
 
@@ -512,7 +547,7 @@ elif st.session_state.menu == 1:
 
         st.write("Vos résultats ont bien été pris en compte.")
         st.write("Merci pour votre participation !")
-        st.markdown("Pour toute remarque ou commentaire complémentaire, n'hésitez pas à contacter Romain Chabert à l'adresse <a href='mailto:rchabert@deloitte.fr'>rchabert@deloitte.fr</a>.",unsafe_allow_html=True)
+        st.markdown("Pour toute remarque ou commentaire complémentaire, n'hésitez pas à contacter Romain Chabert à l'adresse <a href='mailto:rchabert@deloitte.fr'>rchabert@deloitte.fr</a>.", unsafe_allow_html=True)
 
         retour_menu = st.button("Retourner au menu")
 
