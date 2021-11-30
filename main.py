@@ -121,6 +121,7 @@ elif st.session_state.menu == 1:
         st.header("Provisionnement")
 
         with st.form(key='methode_provisionnement'):
+            provisionnement = st.selectbox('Travaillez-vous ou avez-vous déjà travaillé sur des questions de provisoinnement', ["-", "Oui", "Non"])
             methode_connue = st.multiselect(
                 "De quelles méthodes de provisionnement avez déjà entendu parler ? (plusieurs réponses possibles)",
                 ["Chain Ladder", "London Chain", "Loss ratio", "Mack", "GLM", "Bornhuetter Ferguson"])  # 6 méthodes
@@ -139,6 +140,9 @@ elif st.session_state.menu == 1:
                 methode_utilisee.append("")
 
             st.session_state.user_data.append("BLOC")
+
+            st.session_state.user_data.append("Expérience provisionnement")
+            st.session_state.user_data.append(provisionnement)
 
             st.session_state.user_data.append("Méthodes connues")
             st.session_state.user_data.extend(methode_connue)
@@ -597,7 +601,7 @@ elif st.session_state.menu == 2:
 
     # http://metadataconsulting.blogspot.com/2019/03/OneDrive-2019-Direct-File-Download-URL-Maker.html
 
-    st.write("Cette seconde partie de l'étude, à effectuer sur un tableur, est constituée d'une série de cas pratiques sous Excel. Appuyez sur [ce lien] (https://onedrive.live.com/download?cid=E1CA44655646A7B5&resid=E1CA44655646A7B5%21238264&authkey=AKIZIoQJtLkFOKQ&em=2) pour télécharger le fichier Excel.")
+    st.write("Cette seconde partie de l'étude, à effectuer sur un tableur, est constituée d'une série de cas pratiques sous Excel. [Appuyez sur ce lien] (https://onedrive.live.com/download?cid=E1CA44655646A7B5&resid=E1CA44655646A7B5%21238264&authkey=AKIZIoQJtLkFOKQ&em=2) pour télécharger le fichier Excel.")
     st.write("_Attention : bien penser à enregistrer le fichier téléchargé avant de pouvoir le renvoyer ensuite._")
 
     st.markdown("Une fois terminé, merci de retourner le cas pratique par mail à l'adresse suivante : <a href='mailto:rchabert@deloitte.fr'>rchabert@deloitte.fr</a>.", unsafe_allow_html=True)
