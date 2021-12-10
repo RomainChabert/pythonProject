@@ -372,7 +372,7 @@ elif st.session_state.menu == 1:
 
         with st.form(key="gambler"):
             st.write("La probabilité moyenne d'avoir un accident non-responsable pour les individus en portefeuille est estimée à 2%. Les assurés A et B ont le même profil de risque et les mêmes pratiques de conduite. ")
-            st.write("L’année dernière, l’individu A a eu 4 accidents auto non responsables. L’individu B n’a jamais eu d’accident")
+            st.write("L’année dernière, l’individu A a eu 4 accidents auto non responsables tandis que B n'en a pas eu.")
             accident = st.text_input("Qui est le plus susceptible d'avoir un nouvel accident le premier ?")
             sb_gambler = st.form_submit_button(label="Page suivante")
 
@@ -545,21 +545,7 @@ elif st.session_state.menu == 1:
 
             import gspread
 
-            # A supprimer (compromis & modifés)
-            #credentials = {
-            #    "type": "service_account",
-            #    "project_id": "acoustic-mix-331213",
-            #    "private_key_id": "28bf926ad27ea160b487b68d615b6a8c87659cfa",
-            #    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQC5enym8sKaQvSb\nLBPjfRg0fZVL6ToQNMvUBTJdMqDHRzBF1d83XwdCoyu/LfOjuGa08SF56Lf5X9K+\nNGzgU/g0tir8GjI+Y0cGl9GYmOjVhN60F669jhvyhDTpDSE1dvoHhrwuRT+tbk5X\nvHR6irx0W/+0y87Qc0SnQBlLwm4HpRWTe8aSwY1huc/Y8Drj9akOh5Z8FJJC2imk\nQrzDu4lFeiAjUgyV2lhuWymNIlVeSd7E4vEMOjtpYH7NakFhgNyklDqobZYCZpFZ\nm23v5HU8llg17mOLpopAWGMHBeHsqhYibk3G6AYPhIk/By3Zl0U/F005nGNrduJJ\nv2rd67lZAgMBAAECgf9KDSfMql9yTLPGwB0GAOEJE+/naYD6YhnULGmki/IPndHI\nD/tulUzGGMn+f3omg24oukeDRJvZvvLaEv7lEUv8v5Op00umsjxJMD6eOMO80QTu\nd1tskrArGF2Hg5Zz92xw/3oM1IOihR0CKluBZqKW/PllACSHVNNeyFimcUSSCB01\nACIFb57ubd9jmfYCHXnDSQdZRT8kuXaOboZ54OcVYhZfaiU2uj3vj8ZyS2PG39jm\nOmeRpDZGf+YWHB41SvvFQwWR1irzQ1G4awCwBHdoa4W8dlh+tcwHPJqaVMb3HCk8\nWlbmMZMQhRaSE4CeUel2WXt3Zu1E9uhNKYmPpYECgYEA86c8ZKsoDoO0MUwLrYNa\nGhFQDv1VoWlif3Ljn7ki4PhdhgUzhh0MTxH0yTZtgubUBN/yhoVxhwBXwuKCLEQx\nqt3Kbxpe65LXSqxVr6gkJn57DZvQqc1F28YWrMONGYGxvBr6ZMIQngRkXy8W3f+2\njF4aPuaoS8u8HqtwSvFSw4ECgYEAwuCVxxTTD4g3KROVt5P4y02MYDuEkoNWNfXw\nmSZjhxrS6WsHan6M0R5GVKFBSUK42pC9JMyXXk+qefRHD9SVXhNm27xU1BabpXqw\nXUW3yBgJuXXw2oQbspOi9Zh7EPAAR6FaDH8s1ysjHxYaFSEvOwq0WZzRgLRaNC9o\nDbpAgdkCgYBqsnJc9yKccIpJCC8Y9atQPQKc/c0w2PBcNVh+ilk+wSRbWw28Dh5k\nxc03C9GbADAaTmNrCyay4rCL1BsC/X3ugB901cx5Rp1mwt7nBC+Id9y1EeWnZg/Q\ndQda8mtonwXRBNNfqigSuoOltv5BiwhKoa7GmsVaI8ame5a6CsGegQKBgD8dD0UH\nmId6PSsffaiT0sq9Fc6A2CG/SWd2fHKNPUSfSllwYVl7HM4JOQvlochBRK78m1VU\nsV1I/dQ7adxVo/5w2CooJ2z82XHRd1bt4mR6bIPVD6klifbe27MgrBLDN8P7HLfZ\nZENXZCuIM/BN7Ab6I4i2Qh+lyWUHSXLQtF2ZAoGAPzJtUNV0j0gAiKv0T6Zl9tzf\nebQn3FwhC1JCWuZj3i2YKboSWW/P67HZTHU0pUVWkdL1TFyFXeshI807ah5980G6\nYfmFSXIB1hDHv60WEDvyMU/zA4y64mCOPht0genVN5RLVRkfEhdAVVu+WfN3YTFf\nrH2CeEEMikMTvo/jHKU=\n-----END PRIVATE KEY-----\n",
-            #    "client_email": "testteam@acoustic-mix-331213.iam.gserviceaccount.com",
-            #    "client_id": "103380036233115407551",
-            #    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            #    "token_uri": "https://oauth2.googleapis.com/token",
-            #    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            #    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/testteam%40acoustic-mix-331213.iam.gserviceaccount.com"
-            #}
-
-            credentials_2 = {
+            credentials = {
                 "type": st.secrets["s_type"],
                 "project_id": st.secrets["s_project_id"],
                 "private_key_id": st.secrets["s_private_key_id"],
@@ -572,7 +558,7 @@ elif st.session_state.menu == 1:
                 "client_x509_cert_url": st.secrets["s_client_x509_cert_url"]
             }
 
-            gc = gspread.service_account_from_dict(credentials_2)
+            gc = gspread.service_account_from_dict(credentials)
             sh = gc.open("Resultats_questionnaire")
             worksheet = sh.sheet1
             worksheet.insert_row(st.session_state.user_data, 1)
